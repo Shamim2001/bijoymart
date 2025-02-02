@@ -1,0 +1,59 @@
+table.dataTable {
+   clear: both;
+   margin-top: 6px !important;
+   margin-bottom: 6px !important;
+   max-width: none !important;
+   border-collapse: collapse !important;
+   border-spacing: 0;
+}
+
+html.semi-dark .sidebar-wrapper .sidebar-header img {
+   filter: none;
+}
+
+.sidebar-wrapper .metismenu ul a {
+   font-size: 13px;
+}
+
+.sidebar-wrapper .metismenu a {
+   font-size: 13px;
+}
+
+body {
+   font-size: 13px;
+   color: #4c5258;
+   letter-spacing: .5px;
+   font-family: Roboto, sans-serif;
+   background-color: #f7f8fa;
+   overflow-x: hidden;
+}
+
+.form-switch .form-check-input {
+   width: 2.5em;
+   cursor: pointer;
+}
+
+
+
+/* .form-control[type=file],
+.form-control[type=datetime-local],
+.form-select {
+   font-size: 13px;
+} */
+
+.form-control,
+.form-select {
+   font-size: 13px;
+}
+
+body {
+   font-size: 13px;
+}
+
+a.btn {
+   font-size: 13px;
+}
+
+.pagination li a {
+   font-size: 13px;
+}

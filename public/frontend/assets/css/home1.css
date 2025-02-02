@@ -1,0 +1,20 @@
+.header-top.text-uppercase {
+   background: #d70000 !important;
+}
+
+.sticky-header {
+   background: #ffffff;
+}
+
+.header-contact,
+.header-contact h6,
+.icon-shopping-cart {
+   color: #000000;
+}
+
+.footer {
+   background-image: url('../../../frontend/assets/images/footer_bg1.jpg');
+   background-position: top center;
+   background-repeat: no-repeat;
+   background-size: cover;
+}
