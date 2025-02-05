@@ -139,13 +139,25 @@
                                         {{ $customer->phone }}<br><br>
                                         {{-- <a href="#">Change Password</a> --}}
                                     </p>
+                                </div><!-- End .card-body -->
+                            </div><!-- End .card -->
+                        </div><!-- End .col-md-6 -->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    Referral Information
+                                </div><!-- End .card-header -->
 
+                                <div class="card-body">
                                     @php
                                         $referralLink = route('customer.register', ['ref' => $customer->referral_code]);
                                     @endphp
-                                    <p>Share this referral link with your friends:
+                                    <p>Your referral code is: <strong>{{ $customer->referral_code }}</strong></p>
+                                    Refferal Bonus: <strong>&#2547; {{ $customer->referral_balance }} </strong><br>
+
+                                    <p>Share this referral link with your friends:</p>
                                     <a target="_blank" href="{{ $referralLink }}">{{ $referralLink }}</a>
-                                </p>
+
                                     {{-- <input type="text" value="{{ $referralLink }}" readonly> --}}
                                 </div><!-- End .card-body -->
                             </div><!-- End .card -->

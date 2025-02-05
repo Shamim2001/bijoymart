@@ -276,15 +276,21 @@ class CartController extends Controller
             $setting = AllSetting::first();
 
 
-            $customerIds = Customer::pluck('id');
+            // $customerIds = Customer::pluck('id');
             // $customer = Customer::get()->toArray();
             // $customerId = Customer::where('id', $id)->value('id');
 
             // dd($customerIds);
 
+            // dd(gettype( (int) $request->customer_id));
+            // $customer = Customer::where('id', $request->customer_id)->first();
+            $customer = Customer::find($request->customer_id);
+
+
             $deliveryCharge = $request->delivery_charge == 'inside' ? $setting->d_charge_inside_dhaka : $setting->d_charge_outside_dhaka;
             $orders = Order::get();
             $gtotal = (float) str_replace(',', '', Cart::subtotal());
+
 
             $order = Order::create([
                 // "user_id"               => $customerIds,
@@ -302,8 +308,75 @@ class CartController extends Controller
                 "discount"              => 0,
                 "tracking_code"         => date('ymd') . $orders->count() + 1 . date('His'),
                 "date"                  => date('Y-m-d'),
-                // "customer_id"           => $customer->id,
+                "customer_id"           => $customer->id ?? null,
             ]);
+
+            // dd($order->total);
+
+            // Check if this user was referred
+            if (!empty($customer->referral_by)) {
+                // dd($customer->referral_by);
+                $referrer = Customer::find( $customer->referral_by);
+                // dd($referrer);
+                if ($referrer) {
+                    // Get the first 4 people referred by this referrer (in order)
+                    $referredUsers = Customer::where('referral_by', $referrer->id)
+                        ->orderBy('created_at', 'asc')
+                        ->take(3)
+                        ->get();
+
+                    $totalReferred = $referredUsers->count();
+
+
+                     // If at least 4 referred users exist, apply the commission percentage
+                     if ($totalReferred >= 3) {
+
+                        $totalCommission = round($order->total * 0.10); // 10% of total amount, rounded
+
+                        // Calculate and round individual commissions
+                        $commissions = [
+                            // round($totalCommission * 0.05), // 5%
+                            round($totalCommission * 0.15), // 15%
+                            round($totalCommission * 0.30), // 30%
+                            round($totalCommission * 0.50), // 50%
+                        ];
+
+                        // Additional 5% commission for the original referrer
+                        $referrerCommission = round($totalCommission * 0.05); // 5% of total commission
+                        $referrer->increment('referral_balance', $referrerCommission);
+
+                        // Distribute commissions
+                        $referredUsers[0]->increment('referral_balance', $commissions[0]); // 1st user
+                        $referredUsers[1]->increment('referral_balance', $commissions[1]); // 2nd user
+                        $referredUsers[2]->increment('referral_balance', $commissions[2]); // 3rd user
+                        // $referredUsers[3]->increment('referral_balance', $commissions[3]); // 4th user
+
+
+                    }
+                }
+            }
+
+            // // Referral Commission Logic (if customer was referred)
+            // if ($customer->referral_by) {
+            //     $referrer = Customer::find($customer->referral_by);
+
+            //     if ($referrer && $order->total >= 1000) {
+            //         // Count how many people this referrer has referred
+            //         $referralCount = Customer::where('referral_by', $referrer->id)->count();
+            //         // dd($referralCount);
+            //         if ($referralCount < 4) {
+            //             // First 4 referred users get 100 TK commission
+            //             $referrer->increment('referral_balance', 100);
+            //         } elseif ($referralCount == 4) {
+            //             // 5th referred user gets 50 TK commission
+            //             $referrer->increment('referral_balance', 50);
+            //         }
+            //         // 6th and beyond get no commission
+            //     }
+            // }
+
+
+
 
             // dd(Auth::id());
 

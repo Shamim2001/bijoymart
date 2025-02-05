@@ -76,7 +76,7 @@ class CustomerController extends Controller
         $request->validate([
             'name'     => 'required|string|min:4|max:30|regex:/^[\pL\s\-]+$/u',
             'email'    => 'email:rfc,dns|unique:customers',
-            'phone'    => 'required|numeric|unique:customers|digits:11',
+            // 'phone'    => 'required|numeric|unique:customers|digits:11',
             'password' => 'required|min:6|max:20'
         ]);
         try {
@@ -111,8 +111,8 @@ class CustomerController extends Controller
     // Function to generate affiliate codes
     function generateReferCode($name)
     {
-        $namePart = strtoupper(Str::slug($name, ''));
-        $randomPart = strtoupper(Str::random(5));
+        $namePart = strtolower(Str::slug($name, ''));
+        $randomPart = strtolower(Str::random(5));
         return $namePart . $randomPart;
     }
 
