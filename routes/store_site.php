@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\SiteController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CustomerController;
+use App\Http\Controllers\Frontend\WithdrawalController;
 use App\Http\Controllers\PagesController;
 
 Route::get('/', [SiteController::class, 'index'])->name('index');
@@ -55,4 +56,9 @@ Route::prefix('customer')->name('customer.')->group(function () {
    Route::post('/data', [CustomerController::class, 'data'])->name('data');
    Route::get('/addressbook', [CustomerController::class, 'address_book'])->name('addressbook')->middleware('checkcustomer');
    Route::get('/myorder/{phone}', [CustomerController::class, 'myorder'])->name('myorder')->middleware('checkcustomer');
+
+   // Withdrawal
+    Route::get('/withdrawal/{customer}', [WithdrawalController::class, 'withdrawal'])->name('withdrawal')->middleware('checkcustomer');
+    Route::post('/withdraw', [WithdrawalController::class, 'requestWithdrawal'])->name('withdraw.request')->middleware('checkcustomer');
+
 });

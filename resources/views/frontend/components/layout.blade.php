@@ -34,6 +34,8 @@
     <!-- Plugins CSS File -->
     {{-- <link rel="stylesheet" href="{{ asset('frontend/assets/css/bootstrap.min.css') }}"> --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/toastr.min.css') }}">
@@ -110,12 +112,32 @@
     <script src="{{ asset('frontend/assets/js/plugins.min.js') }}"></script>
 
     <!-- Main JS File -->
+
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
     <script src="{{ asset('frontend/assets/js/toastr.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/main.min.js') }}"></script>
     <script src="{{ asset('frontend/custom.js') }}"></script>
     {{-- <script src="{{ asset('frontend/loadmore.js') }}"></script> --}}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        @if (Session::has('success'))
+            toastr.success("{{ Session::get('success') }}");
+        @endif
+
+        @if (Session::has('error'))
+            toastr.error("{{ Session::get('error') }}");
+        @endif
+
+        @if (Session::has('warning'))
+            toastr.warning("{{ Session::get('warning') }}");
+        @endif
+
+        @if (Session::has('info'))
+            toastr.info("{{ Session::get('info') }}");
+        @endif
+    </script>
 
     @stack('js')
 </body>

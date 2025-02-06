@@ -18,9 +18,7 @@
             {{-- <li><a href="{{ route('customer.wishlist',['hashedPhone' => $hashedPhone]) }}">My Wishlist</a></li> --}}
             <li><a href="{{ route('customer.wishlist',$customer->phone) }}">My Wishlist</a></li>
 
-
-
-            <li><a href="#">My Point</a></li>
+            <li><a href="{{ route('customer.withdrawal', $customer) }}">My Point</a></li>
         </ul>
     </div><!-- End .widget -->
 </aside><!-- End .col-lg-3 -->
