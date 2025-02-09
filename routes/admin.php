@@ -12,6 +12,7 @@ use App\Http\Controllers\Backend\SellerController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\StaffController;
 use App\Http\Controllers\Backend\WebsiteController;
+use App\Http\Controllers\Backend\WithdrawController;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 
@@ -171,4 +172,16 @@ Route::prefix('admin/')->name('admin.')->group(function () {
    Route::get('staff/{id}/edit', [StaffController::class, 'edit'])->name('staff.edit');
    Route::put('staff/{id}', [StaffController::class, 'update'])->name('staff.update');
    Route::get('staff/{id}', [StaffController::class, 'delete'])->name('staff.delete');
+
+   // Withdrawal
+    Route::get('withdrawal', [WithdrawController::class, 'index'])->name('withdraw.index');
+    Route::get('withdrawal/{id}/edit', [WithdrawController::class, 'edit'])->name('withdraw.edit');
+    Route::put('withdrawal/{id}/approve', [WithdrawController::class, 'approveWithdrawal'])->name('withdraw.approve');
+    // Route::post('/withdrawal/callback', [WithdrawController::class, 'handleCallback'])->name('withdrawal.callback');
+
+
+    // Route::get('/withdraw/success/{id}', [WithdrawController::class, 'withdrawSuccess'])->name('withdraw.success');
+    // Route::get('/withdraw/fail/{id}', [WithdrawController::class, 'withdrawFail'])->name('withdraw.fail');
+    // Route::get('/withdraw/cancel/{id}', [WithdrawController::class, 'withdrawCancel'])->name('withdraw.cancel');
+
 });

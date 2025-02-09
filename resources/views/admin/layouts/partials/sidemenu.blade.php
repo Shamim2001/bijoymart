@@ -212,6 +212,9 @@
                     </li>
                 </ul>
             </li>
+            <li>
+                <a href="{{ route('admin.withdraw.index') }}"><i class="bi bi-arrow-right-short"></i>Withdraw Manage</a>
+            </li>
         @elseif (Auth::user()->user_type === 'staff')
             <li>
                 <a href="{{ route('admin.order.allOrders') }}"><i class="bi bi-arrow-right-short"></i>All Orders</a>

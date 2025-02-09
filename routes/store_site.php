@@ -61,4 +61,10 @@ Route::prefix('customer')->name('customer.')->group(function () {
     Route::get('/withdrawal/{customer}', [WithdrawalController::class, 'withdrawal'])->name('withdrawal')->middleware('checkcustomer');
     Route::post('/withdraw', [WithdrawalController::class, 'requestWithdrawal'])->name('withdraw.request')->middleware('checkcustomer');
 
+    // Withdrawal via SSLCommerz
+    // Route::get('/withdraw/process/{id}', [WithdrawalController::class, 'processWithdrawal'])->name('withdraw.process');
+    // Route::get('/withdraw/success/{id}', [WithdrawalController::class, 'withdrawalSuccess'])->name('withdraw.success');
+    // Route::get('/withdraw/fail/{id}', [WithdrawalController::class, 'withdrawalFail'])->name('withdraw.fail');
+    // Route::get('/withdraw/cancel/{id}', [WithdrawalController::class, 'withdrawalCancel'])->name('withdraw.cancel');
+
 });

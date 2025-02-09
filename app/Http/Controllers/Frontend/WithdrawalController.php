@@ -41,4 +41,51 @@ class WithdrawalController extends Controller
 
         return back()->with('success', 'Withdrawal request submitted successfully!');
     }
+
+
+
+    // Withdraw via SSLCommerz
+    public function processWithdrawal($id)
+    {
+        $withdrawal = Withdrawal::where('id', $id)->where('status', 'approved')->firstOrFail();
+        $customer = $withdrawal->customer;
+
+        $paymentData = [
+            'total_amount' => $withdrawal->amount,
+            'currency' => "BDT",
+            'tran_id' => uniqid(),
+            'cus_name' => $customer->name,
+            'cus_email' => $customer->email,
+            'cus_phone' => $customer->phone,
+            'success_url' => route('withdraw.success', $withdrawal->id),
+            'fail_url' => route('withdraw.fail', $withdrawal->id),
+            'cancel_url' => route('withdraw.cancel', $withdrawal->id),
+        ];
+
+        return SslCommerz::makePayment($paymentData);
+    }
+
+    // SSLCommerz Success
+    public function withdrawalSuccess($id, Request $request)
+    {
+        $withdrawal = Withdrawal::findOrFail($id);
+        $withdrawal->update([
+            'status' => 'completed',
+            'transaction_id' => $request->tran_id
+        ]);
+
+        return "Withdrawal Successful!";
+    }
+
+    // SSLCommerz Fail
+    public function withdrawalFail($id)
+    {
+        return "Withdrawal Failed!";
+    }
+
+    // SSLCommerz Cancel
+    public function withdrawalCancel($id)
+    {
+        return "Withdrawal Cancelled!";
+    }
 }
